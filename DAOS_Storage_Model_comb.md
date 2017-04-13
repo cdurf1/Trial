@@ -9,7 +9,7 @@ This document contains the following sections:
     - <a href="#4">DAOS Container</a>
 - <a href="#5">Transactional Model</a>
 
-<a ide="1"></a>
+<a id="1"></a>
 ## Architecture
 We consider a HPC cluster with hundreds of thousands of compute nodes interconnected via a scalable high-speed, low-latency fabric, where all or a subset of the nodes, called storage nodes, have direct access to byte-addressable persistent memory and, optionally, block-based storage as well (e.g. HDD or SSD). As shown in the <a href="#a">figure </a> below, a storage node can export through the network one or more DAOS targets, each of which corresponds to a fixed-size partition of its directly-accessible storage. A target is the unit of both fault and concurrency. A storage node can host as many targets as it likes, in the limit of the available storage capacity. A DAOS pool is a collection of targets distributed across multiple different storage nodes. A pool is responsible for both data and metadata resilience. Each pool is identified by a unique UUID and maintains target membership in persistent memory.
 
@@ -33,7 +33,7 @@ Table 3-1 shows the targeted level of scalability for each DAOS concept.
 |Key-Value/Document Store Object|10<sup>9</sup> Records (billions)
 |Byte Array Object|10<sup>15</sup> Bytes (peta)|
 
-<a ide="2"></a>
+<a id="2"></a>
 
 ### DAOS Target
 
@@ -43,7 +43,7 @@ A target is assumed to have limited capability and to be a single point of failu
 
 A target is the unit of both performance and concurrency. Hardware components associated with the target, such as the backend storage medium, the server, and the network, have limited capability and capacity. Target performance parameters such as bandwidth and latency are exported to upper layers for optimal placement.
 
-<a ide="3"></a>
+<a id="3"></a>
 
 ### DAOS Pool
 
@@ -57,7 +57,7 @@ A pool is only accessible to authenticated and authorized applications. Multiple
 
 As detailed previously, a pool stores many different sorts of persistent metadata, such as the pool map, the list of containers, authentication and authorization information, and resilvering and rebalancing logs. Such metadata are critical and require the highest level of resiliency. Therefore, the pool metadata are replicated on a few nodes from distinct high-level fault domains. For very large configurations with hundreds of thousands of storage nodes, only a very small fraction of those nodes (in the order of tens) run the pool metadata service. With a limited number of storage nodes, DAOS can afford to rely on a consensus algorithm to reach agreement and to guarantee consistency in the presence of faults and to avoid split-brain syndrome. Moreover, per-container metadata may be stored in the same raft instance as the pool metadata or in a dedicated one. A pool can then contain an arbitrary set of raft engines, one of which manages the pool metadata and is used to assign the other raft engine to individual containers (discussed in section 3.1.3). Members of the metadata service elect a leader, which is responsible for processing new metadata updates and servicing reads. Updates are validated once they have been written to a quorum of replicas. The leader sends periodic heartbeats to inform the other replicas that it is still alive. A new leader election is triggered if replicas don’t receive any heartbeat from the current leader after a certain timeout.
 
-<a ide="4"></a>
+<a id="4"></a>
 
 ### DAOS Container
 
@@ -86,7 +86,7 @@ As shown in the following <a href="a">figure</a>, each object is identified in t
 A container is the basic unit of atomicity and versioning. All object operations are explicitly tagged by the caller with a transaction identifier called an epoch. Operations submitted against the same epoch are committed atomically to a container. Epochs are arranged in total order such that epochs less than or equal to the highest committed epoch (HCE) correspond to immutable container versions. Committed epochs for a container may periodically be aggregated to reclaim space utilized by overlapping writes and to reduce metadata complexity. A snapshot is a permanent reference that can be placed on a committed epoch to prevent aggregation.
 Container metadata (epoch state, list of snapshots, container open handles, the layout of the object index table, etc.) are stored in persistent memory and maintained by a dedicated container metadata service that either uses the same raft engine as the parent metadata pool service, or has its own raft instance. This is configurable when creating a container.
 
-<a ide="5"></a>
+<a id="5"></a>
 
 ## Transactional Model
 
