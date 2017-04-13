@@ -1,13 +1,19 @@
 # DAOS Storage Model
 
 In this section, we describe the DAOS storage paradigm including its transaction, security and fault models.
+This document contains the following sections:
 
+- <a href="#1">Architecture</a>
+    -  <a href="#2">DAOS Target</a>
+    - <a href="#3">DAOS Pool</a>
+    - <a href="#4">DAOS Container</a>
+- <a href="#5">Transactional Model</a>
+
+<a ide="1"></a>
 ## Architecture
 We consider a HPC cluster with hundreds of thousands of compute nodes interconnected via a scalable high-speed, low-latency fabric, where all or a subset of the nodes, called storage nodes, have direct access to byte-addressable persistent memory and, optionally, block-based storage as well (e.g. HDD or SSD). As shown in the <a href="#a">figure </a> below, a storage node can export through the network one or more DAOS targets, each of which corresponds to a fixed-size partition of its directly-accessible storage. A target is the unit of both fault and concurrency. A storage node can host as many targets as it likes, in the limit of the available storage capacity. A DAOS pool is a collection of targets distributed across multiple different storage nodes. A pool is responsible for both data and metadata resilience. Each pool is identified by a unique UUID and maintains target membership in persistent memory.
 
 <a id="a"></a>
-**Example of four Storage Nodes, eight DAOS Targets and three DAOS Pools**
-
 ![HLD_Graphics/Fig_001.png](HLD_Graphics/Fig_001.png "Example of four Storage Nodes, eight DAOS Targets and three DAOS Pools")
 
 The <a href="#b">figure </a> below represents the fundamental abstractions of the DAOS storage model. A pool can host multiple transactional object stores called DAOS containers, identified by UUIDs. Each container is a private object address space, which can be atomically modified and snapshotted independently of the other containers sharing the same pool. DAOS objects in a container are identified by a unique object address and have a type (either byte array, KV store or document store, see 3.1.4 for more details) which is encoded in the object ID (see 3.1.3). Objects can be distributed across any target of the pool for both performance and resilience.
@@ -27,6 +33,8 @@ Table 3-1 shows the targeted level of scalability for each DAOS concept.
 |Key-Value/Document Store Object|10<sup>9</sup> Records (billions)
 |Byte Array Object|10<sup>15</sup> Bytes (peta)|
 
+<a ide="2"></a>
+
 ### DAOS Target
 
 A target is the basic unit of storage allocation and space management. It is associated with a reservation of persistent memory optionally combined with block-based storage for capacity. A target has a fixed capacity expressed in bytes and fails operations when it is full. Current space usage can be queried at any time and reports the total amount of bytes used by any data type stored in the target.
@@ -34,6 +42,8 @@ A target is the basic unit of storage allocation and space management. It is ass
 A target is assumed to have limited capability and to be a single point of failure. Firstly, its backend storage is assumed to be attached to a single node and hence, has no failover capability in case of storage node failure. Secondly, a target does not necessarily implement an internal redundancy schema to protect stored data against storage media failure. As a consequence, a dynamic state is associated with each target and is set to either up and running, or down and not available. Nonetheless, a target is still responsible for data integrity and thus, manages checksums internally to detect and report corruption.
 
 A target is the unit of both performance and concurrency. Hardware components associated with the target, such as the backend storage medium, the server, and the network, have limited capability and capacity. Target performance parameters such as bandwidth and latency are exported to upper layers for optimal placement.
+
+<a ide="3"></a>
 
 ### DAOS Pool
 
@@ -46,6 +56,8 @@ Upon target failure and exclusion from the pool map, data redundancy inside the 
 A pool is only accessible to authenticated and authorized applications. Multiple security frameworks could be supported, from simple POSIX access control lists to third party-based authentication (such as Kerberos). Security is enforced when connecting to the pool. The pool stores a persistent list of containers which includes the container UUIDs and the name associated with each container. Initially, only single-user pool will be supported, which means that once connected, an application can access any container hosted in the pool. In a future implementation, authorization could be managed per-container. Moreover, a more fine-grained control (e.g. per-object, per-POSIX file, per-dataset…) could be implemented by the top-level API. Upon successful connection to the pool, a connection context is returned to the application process.
 
 As detailed previously, a pool stores many different sorts of persistent metadata, such as the pool map, the list of containers, authentication and authorization information, and resilvering and rebalancing logs. Such metadata are critical and require the highest level of resiliency. Therefore, the pool metadata are replicated on a few nodes from distinct high-level fault domains. For very large configurations with hundreds of thousands of storage nodes, only a very small fraction of those nodes (in the order of tens) run the pool metadata service. With a limited number of storage nodes, DAOS can afford to rely on a consensus algorithm to reach agreement and to guarantee consistency in the presence of faults and to avoid split-brain syndrome. Moreover, per-container metadata may be stored in the same raft instance as the pool metadata or in a dedicated one. A pool can then contain an arbitrary set of raft engines, one of which manages the pool metadata and is used to assign the other raft engine to individual containers (discussed in section 3.1.3). Members of the metadata service elect a leader, which is responsible for processing new metadata updates and servicing reads. Updates are validated once they have been written to a quorum of replicas. The leader sends periodic heartbeats to inform the other replicas that it is still alive. A new leader election is triggered if replicas don’t receive any heartbeat from the current leader after a certain timeout.
+
+<a ide="4"></a>
 
 ### DAOS Container
 
@@ -73,6 +85,8 @@ As shown in the following <a href="a">figure</a>, each object is identified in t
 
 A container is the basic unit of atomicity and versioning. All object operations are explicitly tagged by the caller with a transaction identifier called an epoch. Operations submitted against the same epoch are committed atomically to a container. Epochs are arranged in total order such that epochs less than or equal to the highest committed epoch (HCE) correspond to immutable container versions. Committed epochs for a container may periodically be aggregated to reclaim space utilized by overlapping writes and to reduce metadata complexity. A snapshot is a permanent reference that can be placed on a committed epoch to prevent aggregation.
 Container metadata (epoch state, list of snapshots, container open handles, the layout of the object index table, etc.) are stored in persistent memory and maintained by a dedicated container metadata service that either uses the same raft engine as the parent metadata pool service, or has its own raft instance. This is configurable when creating a container.
+
+<a ide="5"></a>
 
 ## Transactional Model
 
