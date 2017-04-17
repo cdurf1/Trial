@@ -1,4 +1,4 @@
 # Trial
 Testing
 
-<a target="_blank" href="test1/index.html">Link</a>
+<a target="_new" href="test1/index.html">Link</a>
