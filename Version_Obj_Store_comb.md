@@ -379,12 +379,9 @@ The code in the <a href="#7s>figures</a> below show the  TOID macros for definin
 <a id="7u"></a>
 **Code Block representing the layout of container index table structures with NVML pointers and ListsCode Block representing the layout of container index table structures with NVML pointers and Lists**
 
+![HLD_Graphics/Fig_031.png]( HLD_Graphics/Fig_031.png "Code Block representing the layout of container index table structures with NVML pointers and Lists")
 
-![HLD_Graphics/Fig_031.png][a]
-
-[a]: HLD_Graphics/Fig_031.png "Code Block representing the layout of container index table structures with NVML pointers and Lists"
-
-The three main index tables for VOS are the container index table, object index table and epoch index table. VOS uses NVML TOID pointers as shown in section 6.6.1, to construct all the three index tables The NVML library libpmemobj also provides a set of list interfaces to create persistent lists. These persistent lists provide separate chaining for hash buckets in the hash table. Persistent list operations represented with POBJ_LIST_* macros and their internal representation are shown in Figure 6.17. Each container created in VOS has its own object index and epoch index tables. The container table is a hash table that hashes the container uuid to a value. The value comprises of the persistent memory pointer to both the object and the epoch index tables, and the lowest and highest epoch of that container.
+The three main index tables for VOS are the container index table, object index table and epoch index table. VOS uses NVML TOID pointers as shown in the previous <a href="#761">section</a>, to construct all the three index tables The NVML library libpmemobj also provides a set of list interfaces to create persistent lists. These persistent lists provide separate chaining for hash buckets in the hash table. Persistent list operations represented with POBJ_LIST_* macros and their internal representation are shown in the <a href="#7u">figure</a> above. Each container created in VOS has its own object index and epoch index tables. The container table is a hash table that hashes the container uuid to a value. The value comprises of the persistent memory pointer to both the object and the epoch index tables, and the lowest and highest epoch of that container.
 
 **Code Block representing the layout of object index and epoch index entry**
 
@@ -408,7 +405,7 @@ The three main index tables for VOS are the container index table, object index 
 
 ![HLD_Graphics/Fig_035.png][d]
 
-[d]: HLD_Graphics/Fig_035.png "Code block representing the pool creation, pool open and root-object creation" 
+[d]: HLD_Graphics/Fig_035.png ("Code block representing the pool creation, pool open and root-object creation") 
 
 The first <a href="#a">figure</a> shows the detailed layout of the container index table with NVML pointers and list API. Layouts of object table and epoch table are similar to the container index table shown in this <a href="#b">figure</a>. Each object table entry would have the object id, PMEM pointer to the tree based index structure (either rb-tree/b+-tree). 
 
