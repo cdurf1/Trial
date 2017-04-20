@@ -383,6 +383,7 @@ The code in the <a href="#7s>figures</a> below show the  TOID macros for definin
 
 The three main index tables for VOS are the container index table, object index table and epoch index table. VOS uses NVML TOID pointers as shown in the previous <a href="#761">section</a>, to construct all the three index tables The NVML library libpmemobj also provides a set of list interfaces to create persistent lists. These persistent lists provide separate chaining for hash buckets in the hash table. Persistent list operations represented with POBJ_LIST_* macros and their internal representation are shown in the <a href="#7u">figure</a> above. Each container created in VOS has its own object index and epoch index tables. The container table is a hash table that hashes the container uuid to a value. The value comprises of the persistent memory pointer to both the object and the epoch index tables, and the lowest and highest epoch of that container.
 
+<a id="7v"></a>
 **Code Block representing the layout of object index and epoch index entry**
 
 ![HLD_Graphics/Fig_032.png][b]
@@ -409,7 +410,7 @@ The three main index tables for VOS are the container index table, object index 
 
 The first <a href="#a">figure</a> shows the detailed layout of the container index table with NVML pointers and list API. Layouts of object table and epoch table are similar to the container index table shown in this <a href="#b">figure</a>. Each object table entry would have the object id, PMEM pointer to the tree based index structure (either rb-tree/b+-tree). 
 
-An epoch-table entry would be comprised of the epoch number and its respective key. Key in the epoch-table is generic and can take the type as byte-array extents or KV keys, and has been left as a “void*” persistent memory pointer for that reason. The following code in Figure 6 20 represents the layout for B+ Tree in NVML. A similar construction would be necessary for the container handle cookie index table. The code in Figure 6 21 presents a layout definition for VOS over NVML.
+An epoch-table entry would be comprised of the epoch number and its respective key. Key in the epoch-table is generic and can take the type as byte-array extents or KV keys, and has been left as a “void*” persistent memory pointer for that reason. The following code in <a href="#7v">figure</a> above represents the layout for B+ Tree in NVML. A similar construction would be necessary for the container handle cookie index table. The code in Figure 6 21 presents a layout definition for VOS over NVML.
 
 In addition to providing persistent memory friendly definitions for all the data structures required to maintain metadata in the VOS pool, NVML requires a clearly defined layout for the NVML pool. NVML provides run-time and compile-time safety with specially-defined macros. Figure 6 22 shows layout definition for VOS. Both POBJ_LAYOUT_ROOT and POBJ_LAYOUT_TOID perform a TOID_DECLARE as show in  with an additional type_id argument. 
 
