@@ -357,7 +357,7 @@ The root object in NVML facilitates locating the superblock of a Versioning obje
 
 Pointers in NVML contain the offset from the beginning of the pool rather than the virtual address space and a unique ID of the pool. Internally, NVML uses the pool ID to locate the actual virtual address of the pool stored in a hash table. The actual virtual address of the pointer is determined by looking up the address of the pool, using the pool ID and adding the associated offset to it. NVML represents persistent pointers as PMEMoid, and the pmemobj_direct(PMEMoid oid) converts it to a virtual memory pointer. Although NVML provides a way for accessing persistent memory pointers as void\*, operating on such pointers can be error-prone because there is no type associated with the pmem pointers. NVML addresses this issue with the help of named unions and macros as shown in Figure 6.16. NVML also provides additional macros D_RW and D_RO to convert typed PMEMoid pointers to direct pointers of their associated types, which are equivalents of using pmemobj_direct on the oids and converting the resultant void* pointers to their respective types.  
 
-The code in the <a href="#7s>figures</a> below show the  TOID macros for defining typed pointers in NVML and the internal representation of List entry macros in NVML. The PMEMmutex lock provides a pmem-aware lock that is similar to traditional pthread locks, with an additional property of auto re-initialization right after pool open, regardless of the state of lock at pool close. The root object in NVML is created with the pmemobj_root() API or the macro POBJ_ROOT to return a typed pointer. The root object for VOS created with NVML pointers is shown in the first <a href="#7s">example</a>.
+The code in the <a href="#7s">figures</a> below show the  TOID macros for defining typed pointers in NVML and the internal representation of List entry macros in NVML. The PMEMmutex lock provides a pmem-aware lock that is similar to traditional pthread locks, with an additional property of auto re-initialization right after pool open, regardless of the state of lock at pool close. The root object in NVML is created with the pmemobj_root() API or the macro POBJ_ROOT to return a typed pointer. The root object for VOS created with NVML pointers is shown in the first <a href="#7s">example</a>.
 
 <a id="7s"></a>
 
@@ -379,64 +379,169 @@ The code in the <a href="#7s>figures</a> below show the  TOID macros for definin
 <a id="7u"></a>
 **Code Block representing the layout of container index table structures with NVML pointers and ListsCode Block representing the layout of container index table structures with NVML pointers and Lists**
 
-![HLD_Graphics/Fig_031.png]( HLD_Graphics/Fig_031.png "Code Block representing the layout of container index table structures with NVML pointers and Lists")
 
-The three main index tables for VOS are the container index table, object index table and epoch index table. VOS uses NVML TOID pointers as shown in the previous <a href="#761">section</a>, to construct all the three index tables The NVML library libpmemobj also provides a set of list interfaces to create persistent lists. These persistent lists provide separate chaining for hash buckets in the hash table. Persistent list operations represented with POBJ_LIST_* macros and their internal representation are shown in the <a href="#7u">figure</a> above. Each container created in VOS has its own object index and epoch index tables. The container table is a hash table that hashes the container uuid to a value. The value comprises of the persistent memory pointer to both the object and the epoch index tables, and the lowest and highest epoch of that container.
+![HLD_Graphics/Fig_026.png](HLD_Graphics/Fig_026.png "Code Block representing the layout of container index table structures with NVML pointers and Lists") 
+
+The three main index tables for VOS are the container index table, object index table and epoch index table. VOS uses NVML TOID pointers as shown in the previous <a href="#761">section</a>, to construct all the three index tables The NVML library libpmemobj also provides a set of list interfaces to create persistent lists. These persistent lists provide separate chaining for hash buckets in the hash table. Persistent list operations represented with POBJ_LIST_* macros and their internal representation are shown in the <a href="7u">Figure</a> above. Each container created in VOS has its own object index and epoch index tables. The container table is a hash table that hashes the container uuid to a value. The value comprises of the persistent memory pointer to both the object and the epoch index tables, and the lowest and highest epoch of that container.
 
 <a id="7v"></a>
 **Code Block representing the layout of object index and epoch index entry**
 
-![HLD_Graphics/Fig_032.png][b]
+![HLD_Graphics/Fig_027.png](HLD_Graphics/Fig_027.png "Code Block representing the layout of object index and epoch index entry")
 
-[b]: HLD_Graphics/Fig_032.png "Code Block representing the layout of object index and epoch index entry"
- 
+<a id="7w"></a> 
 **Code Block Representing the layout for B+ Tree in NVML**
 
-![HLD_Graphics/Fig_033.png][c]
+![HLD_Graphics/Fig_028.png](HLD_Graphics/Fig_028.png "Code Block representing the layout of object index and epoch index entry")
 
-[c]: HLD_Graphics/Fig_033.png "Code Block Representing the layout for B+ Tree in NVML"
-
+<a id="7w"></a>
 **Layout definition for VOS over NVML**
 
-![HLD_Graphics/Fig_034.png][d]
+![HLD_Graphics/Fig_029.png](HLD_Graphics/Fig_029.png "Layout definition for VOS over NVML")
 
-[d]: HLD_Graphics/Fig_034.png "Layout definition for VOS over NVML" 
-
+<a id="7x"></a>
 **Code block representing the pool creation, pool open and root-object creation**
 
-![HLD_Graphics/Fig_035.png][d]
+![HLD_Graphics/Fig_030.png](HLD_Graphics/Fig_030.png "Code block representing the pool creation, pool open and root-object creation") 
 
-[d]: HLD_Graphics/Fig_035.png ("Code block representing the pool creation, pool open and root-object creation") 
+The first <a href="#7u">figure</a> shows the detailed layout of the container index table with NVML pointers and list API. Layouts of object table and epoch table are similar to the container index table shown in this <a href="#7v">figure</a>. Each object table entry would have the object id, PMEM pointer to the tree based index structure (either rb-tree/b+-tree). 
 
-The first <a href="#a">figure</a> shows the detailed layout of the container index table with NVML pointers and list API. Layouts of object table and epoch table are similar to the container index table shown in this <a href="#b">figure</a>. Each object table entry would have the object id, PMEM pointer to the tree based index structure (either rb-tree/b+-tree). 
+An epoch-table entry would be comprised of the epoch number and its respective key. Key in the epoch-table is generic and can take the type as byte-array extents or KV keys, and has been left as a “void\*” persistent memory pointer for that reason. The following code in the previous<a href="#7w">Figure</a> represents the layout for B+ Tree in NVML. A similar construction would be necessary for the container handle cookie index table. The code in previous<a href="#7w">Figure</a> presents a layout definition for VOS over NVML.
 
-An epoch-table entry would be comprised of the epoch number and its respective key. Key in the epoch-table is generic and can take the type as byte-array extents or KV keys, and has been left as a “void*” persistent memory pointer for that reason. The following code in <a href="#7v">figure</a> above represents the layout for B+ Tree in NVML. A similar construction would be necessary for the container handle cookie index table. The code in Figure 6 21 presents a layout definition for VOS over NVML.
-
-In addition to providing persistent memory friendly definitions for all the data structures required to maintain metadata in the VOS pool, NVML requires a clearly defined layout for the NVML pool. NVML provides run-time and compile-time safety with specially-defined macros. Figure 6 22 shows layout definition for VOS. Both POBJ_LAYOUT_ROOT and POBJ_LAYOUT_TOID perform a TOID_DECLARE as show in  with an additional type_id argument. 
+In addition to providing persistent memory friendly definitions for all the data structures required to maintain metadata in the VOS pool, NVML requires a clearly defined layout for the NVML pool. NVML provides run-time and compile-time safety with specially-defined macros. previous<a href="#7x">Figure</a> shows layout definition for VOS. Both POBJ_LAYOUT_ROOT and POBJ_LAYOUT_TOID perform a TOID_DECLARE as show in  with an additional type_id argument. 
 
 POBJ_LAYOUT_BEGIN starts a counter to assign type IDs consecutively until end. This is useful in verifying whether the current version of the layout matches with the existing objects and their type numbers. NVML provides a TOID_VALID macro to verify type numbers. 
 
-On definition of the layout, VOS initializes the pool using pmemobj_create. The pmemobj_open interface allows us to open the pool for future use. NVML provides the pmemobj_root or its equivalent macro POBJ_ROOT for defining the root object for the pool. The POBJ_LAYOUT_NAME is just a wrapper to translate the layout string created using POBJ_LAYOUT_BEGIN/END to an internal representation of NVML. Error! Reference source not found. shows usage of these routines with VOS structures.
+On definition of the layout, VOS initializes the pool using pmemobj_create. The pmemobj_open interface allows us to open the pool for future use. NVML provides the pmemobj_root or its equivalent macro POBJ_ROOT for defining the root object for the pool. The POBJ_LAYOUT_NAME is just a wrapper to translate the layout string created using POBJ_LAYOUT_BEGIN/END to an internal representation of NVML.
 
 In the case of persistent memory, the actual data apart from the metadata is also stored in the same pool. VOS allocates the pool to be sufficiently larger to support all objects and their metadata. This choice of design is to ensure effective use of underlying storage.
 
 NVML supports allocation, resizing and freeing objects from the persistent memory pool in a thread-safe and fail-safe manner with interfaces like pmemobj_alloc and pmemobj_free. These routines are atomic with respect to other threads or any power-failure interruption. In the event of program failure or system crash, on recovery the allocations made are guaranteed to be entirely completed or discarded, leaving the persistent memory heap and internal object containers in a consistent state. 
 
-A detailed list of these interfaces is available in the manpage  for libpmemobj. The alloc and free interfaces discussed here are non-transactional. libpmemobj offers transactional interfaces to guarantee consistency at all time. Section 6.8 discusses transactions within NVML for VOS.
+A detailed list of these interfaces is available in the manpage  for libpmemobj. The alloc and free interfaces discussed here are non-transactional. libpmemobj offers transactional interfaces to guarantee consistency at all time. The following <a href="#78">section</a> discusses transactions within NVML for VOS.
 
 
 <a id="78"></a>
 
 ## Transactions and Recovery
 
+Transactions are required with persistent memory to ensure a consistent state at all times. The following code sample shows transaction flow with the different stages using macros.
+
+<a id="7y"></a>
+<b>Transaction flow with the different stages using macros</b>
+
+![HLD_Graphics/Fig_036.png](HLD_Graphics/Fig_036.png ">Transaction flow with the different stages using macros")
+ 
+NVML, specifically libpmemobj, provides a set of transactional interfaces to use persistent memory in a fail-safe manner. Libpmemobj transactions allow enclosing a set of operations between start and commit and ensuring a durable and consistent state of the underlying PMEM on transaction commit. In case of a power failure or system crash, libpmemobj guarantees that all uncommitted changes roll back on restart, thereby restoring the consistent state of memory pool from the time when the transaction started.
+ 
+<b>B+Tree KV tree creation with NVML transactions</b>
+<a id="7z"></a>
+![HLD_Graphics/Fig_037.png](HLD_Graphics/Fig_037.png ">Transaction flow with the different stages using macros")
+
+The library libpmemobj offers a set of functions to create and manage transactions. Each transaction goes through a series of stages namely, TX_STAGE_NONE, TX_STAGE_WORK, TX_STAGE_ONABORT, TX_STAGE_FINALLY and TX_STAGE_ONCOMMIT. 
+
+A set of pmemobj_tx_* functions are also provided to change the different stages. libpmemobj also offers macros to eliminate boilerplate code while creating and managing transactions, for example pmemobj_begin() requires the user to set a jmp_buf with setjmp function every time a new transaction is created; this will be enclosed in a macro TX_BEGIN. This section will use macros provided by libpmemobj to explain VOS use of transactions. 
+
+The API libpmemobj represents the complete transaction flow represented with macros as shown in the <a href="#7y">figure</a>
+above. The second <a href="#7z">figure</a> shows a simple example of creating a new KV store with B+ tree with the help of NVML transactions. TX_ZNEW macro creates a typed, zeroed object of size type. libpmemobj also offers several transactional allocations like TX_ALLOC, TX_ZALLOC, and TX_REALLOC among others. The detail list of APIs is available in [1]. 
+
+The pmemobj_tx_add_range_direct interface used in this example takes a snapshot of a persistent memory block of a given size, located at the address ptr in virtual memory spaces and saves it to undo log. On failure, the library rolls back all changes associated with this memory range. The code example in the <a href="#7aa">figure</a>
+below uses B+ Tree based KV store for usage of adding fields to ensure tracking in undo logs for recovery (implementations for bplus_tree_insert_empty_leaf and bplus_tree_insert_into_leaf are not shown for simplicity).
+ 
+<b>Simple example using B+ Tree based KV store for usage of adding fields to ensure tracking in undo logs for recovery</b>
+
+<a id="7aa"></a>
+![HLD_Graphics/Fig_038.png](HLD_Graphics/Fig_038.png "Simple example using B+ Tree based KV store for usage of adding fields to ensure tracking in undo logs for recovery")
+
+To ensure consistency for all objects modified within a transaction, libpmemobj expects all fields to be explicitly added to the transaction to make it a part of the transaction. This is because the library maintains an undo-log to track objects added to a transaction. This log is persistent and is key to rolling back modifications in case of failure. If a particular object is missing in the undo-log, then libpmemobj does not track modifications made to this object causing a persistent memory leak on failure. The code sample in the <a href="#7aa">Figure</a> above shows a partial implementation for insert into a B+ tree for a KV store. This example is an extension of the layout definition of B+ Trees provided in <a href="#7w">*Layout definition for VOS over NVML\</a>. *A simple 64-bit integer key and a void* value is considered in this example and it is seen that a transaction is started/insert and whenever a particular object is modified, for example the root node in this case, it has to be added to the transaction beforehand. 
+
 <a id="781"></a>
 
 ### Discussions on Transaction Model
+
+Although NVML transactions provide guarantees for data consistency, that does not come without a price. NVML creates, persists and maintains undo logs to provide necessary guarantees for recovery on failure. However, maintaining undo logs is expensive. VOS can group operations on its internal data structures and perform updates to data structures in batches, in order to minimize the overhead from undo-logs. 
+
+In addition, NVML transactions currently only support single-threaded transactions where threads currently do not cooperate within a single transaction and so there is no contention management or conflict detection, which is generally a characteristic of software transactional memories. This is a potential problem because VOS requires concurrent access to its internal data structures, which can increase the number of undo logs to ensure consistency. 
+
+There are two possible directions being considered to address this problem. The NVML team has proposed one solution, in which every thread has its own copy of the tree that, which would be kept in-sync with the help of an insert-only, lock-free, singly-linked list, to which all memory ranges (only offset and size) are appended . 
+
+A second approach is to use copy-on-write, where writes do not change existing nodes, but rather create a new node at a new location for providing updates. Once the update is successful, the tree’s pointers point to the new node, rather than the old node, and reclaim space by freeing old nodes. The primary benefit of this approach is that updates happen at a separate location without touching the original tree structure. This facilitates discarding all the latest updates to the tree without causing persistent memory leaks. In this case, discarding updates on failure would mean simply discarding all allocated objects for the new updates, as there was no modification to existing data. Constant allocation and freeing of persistent memory can lead to fragmentation. Jemalloc is a heap manager which uses algorithms and approaches to avoid fragmentation . NVML uses Jemalloc to manage its allocations through memkind . By using NVML to handle PMEM allocations, VOS can leverage the defragmentation benefits of jemalloc. In addition, auto-defragmentation tools can also be developed in future to address defragmentation due to copy-on-write style approach, similar to files-systems like btrfs. 
 
 <a id="79"></a>
 
 ## VOS Checksum Management
 
+One of the guarantees that VOS provides is end-to-end data integrity. Data corruption in VOS can happen while reading or writing data due to a various reasons, including leaks or failures in persistent memory, or during data transmission through the wire. VOS supports data integrity check with checksums. 
+
+Client side (HDF5, DAOS-SR, and DAOS-M) of the stack provides checksum for both byte extents and key value stores on writes and updates, respectively. 
+
+The VOS API for updates and writes will require checksums as arguments from its upper layer(s). VOS requires checksum for both keys and values in case of KV objects. VOS stores the checksum along with the data. 
+
+A Lookup operation on a KV will verify the checksum by computing the checksum for the key and value. If reads in byte-arrays spans over multiple extent ranges, VOS would have to recompute the checksum at the server for each individual extent range for verifying their integrity and return the computed checksum of the entire requested extent range to the client. In case if a read requests a partial byte array extent of an existing extent range, VOS would compute the checksum of the existing extent to verify correctness and then return the requested extent range to the client with its computed checksum. When byte array extents are aggregated, VOS individually re-computes checksum of all extent ranges to be merged to verify correctness, and finally computes and saves the checksum for the merged extent range.
+
+Because checksum computation involves multiple layers of stack to be in-sync, VOS plans to leverage and extend either the mchecksum  library or the Intel Storage acceleration library  (https://01.org/intel®-storage-acceleration-library-open-source-version). 
+
 <a id="80"></a>
 
 ## Metadata Overhead
+
+VOS has many internal data structure making the amount of metadata to maintain object an important factor. Although it would be challenging to provide the exact amount of metadata associated with creating and maintaining different objects within VOS, with certain assumptions we can get an estimate of how much metadata would be required for certain object kinds. This section provides an estimate of the amount of metadata space required for creating and maintaining a single KV object. The primary purpose of this analysis is to present an idea of the metadata costs associated with creating and maintaining objects in VOS. The numbers presented provide approximations rather than modeling or quantifying the exact metadata overhead consumption.
+
+**Assumptions:**
+
+B+-tree with a tree order “8” is used  for implementing the KV object and all the index tables in a VOS pool. Let us assume that:
+<ol>
+<li>each node header consumes, 32 bytes</li>
+<li>A btree record would consume a total of 56bytes where:
+  <ol>
+  <li>hkey_size takes 16 bytes (128 bits)</li>
+  <li>pmem value pointer consumes 16 bytes</li>
+  <li>epochs takes 16 bytes</li>
+  <li>key and value size consume 8 bytes each</li></ol>
+<li>creating a node would cost = ~576bytes (after adjusting for cache alignment</li>
+<li>tree root to hold (order, depth, class, feature) would consume 40bytes. Creating tree root would be an one time cost.</li>
+</ol>
+
+**Scenarios**
+<ol>
+<li>In the best case case when the record position in empty in a leaf, the metadata cost would be:
+  <ol>
+  <li>16 (KV record pointer) + 16 (hkey_size) + 2 (key_count/node) + 32 (additional metadata) = 64 bytes.</li>
+  <li>Additional metadata includes epochs, key and value size.</li>
+  </ol>
+<li>In the most general or average case, with an assumption that the tree is 50% full with a reasonable depth, the metadata cost can be approximately calculated using
+</li>
+<li>tree root to hold (order, depth, class, feature) would consume 40bytes. Creating tree root would be an one time cost.
+<ol>
+  <li>(btr_record_metadata + key_count + depth) * 2 * (1 + 1/8 + 1/64 + …)</li>
+  <li>(64 + 2) * 2 * (1 + 1/8 + 1/64 + …) = ~151bytes</li>
+  <li>Since the order assumed is 8, the 1/8 refers to the point that 1 parent record points to 8 leaf records and so on until root.</li>
+  </ol>
+<li>Metadata initial setup cost for creating one record in a KV including all indexes associated.
+<ol>
+  <li>create_cookie_tree + create_object_tree + create_kv_object (with one record) + create_epoch_tree</li>
+  <li>Create one tree node for every table/object starting from a empty b-tree</li>
+  <li>(btr_tree_node + btree_root) = 4 * (544 + 40) = ~2.36kbytes (after padding for cache alignment)</li>
+  </ol>
+  <li>Once all indexes are created and individual trees have reasonable depth, we can use the average case to determine the metadata cost
+  <ol>
+  <li>1 object with a million KV records, with 1000 epoch and cookies would consume:  (1 + 1000000 + 1000 + 1000) * 151 = ~145MB 
+Which is 145MB/106   =  ~152bytes/record</li>
+</ol></li>  
+</ol>
+
+While using document KV we would have additional cost involved in creating one root-tree node for every level on each insert. To keep the analysis simpler, let us assume one distribution key and many attribute keys. Each attribute key would have a separate value tree.  The initial metadata cost is high but the overall update cost in the best case and the average case would still remain the same as in case of the single level b-tree. This is because, once a value tree for a key is created all updates are added directly to the value tree. And once the different levels of the trees have been initialized, at no point will two levels of the trees would get rebalanced simultaneously. 
+
+<ol>
+<li>Creating one KV - record (initial setup)
+<ol>
+<li>create_cookie_tree + create_object_tree + create_kv_object (with one record) + create_epoch_tree</li>
+<li>Create one tree node for every table/object</li>
+<li>6 * (btr_tree_node + root) + 1 * record = (6 * 616) + 64 = ~3.8kbytes</li>
+</ol>
+<li>Creating one object with one million keys with overwrites at 1000 epochs with 1000 cookies (average case)
+<ol>
+<li>initial setup cost + (1000 + 1000 + 1) * btree_average_update_metadata_cost = (1000000 * 616) + (1000 + 1000 + 1) * 151 = ~588MB, which is 588MB/106 = ~616 bytes/record
+</ol></li>
+</ol>
+
