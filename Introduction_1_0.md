@@ -197,15 +197,15 @@ This section provides an overview of the Intel® Manager for Lustre* software GU
 
 The Intel® Manager for Lustre* software GUI presents a set of intuitive windows that let you set up, configure, monitor, and manage Lustre* file systems. The menu bar provides access to these capabilities.  Click the following links for overview information:
 
-- <a href="1.4.1">Menu bar</a>
-- <a href="1.4.2">Dashboard window</a>
-- <a href="1.4.3">Summary of charts</a>
-- <a href="1.4.4">Configuration menu</a>
-- <a href="1.4.5">Jobs Stats</a>
-- <a href="1.4.6">Logs window</a>
-- <a href="1.4.7">Help</a>
-- <a href="1.4.8">Status Indicator and window</a>
-- <a href="1.4.9">Alert bar</a>
+- <a href="#1.4.1">Menu bar</a>
+- <a href="#1.4.2">Dashboard window</a>
+- <a href="#1.4.3">Summary of charts</a>
+- <a href="#1.4.4">Configuration menu</a>
+- <a href="#1.4.5">Jobs Stats</a>
+- <a href="#1.4.6">Logs window</a>
+- <a href="#1.4.7">Help</a>
+- <a href="#1.4.8">Status Indicator and window</a>
+- <a href="#1.4.9">Alert bar</a>
  
 <a id="1.4.1"></a>
 ### Menu bar
