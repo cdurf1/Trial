@@ -4,14 +4,14 @@
 This section details the Intel® Manager for Lustre* graphical user interface.  Click the desired topic.
 
 - <a href="#9.1">Dashboard window</a>
-- <a href="#9.1">Dashboard charts</a>
-- <a href="#9.1">Configuration menu</a>
-- <a href="#9.1">Job stats</a>
-- <a href="#9.1">Logs window</a>
-- <a href="#9.1">Status window</a>
-- <a href="#9.1">Alert bar</a>
-- <a href="#9.1">Resources tree view</a>
-- <a href="#9.1">Breadcrumb navigation</a>
+- <a href="#9.2">Dashboard charts</a>
+- <a href="#9.3">Configuration menu</a>
+- <a href="#9.4">Job stats</a>
+- <a href="#9.5">Logs window</a>
+- <a href="#9.6">Status window</a>
+- <a href="#9.7">Alert bar</a>
+- <a href="#9.8">Resources tree view</a>
+- <a href="#9.9">Breadcrumb navigation</a>
 
 <a id="9.1"></a>
 ## Dashboard window
