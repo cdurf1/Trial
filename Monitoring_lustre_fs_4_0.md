@@ -117,7 +117,119 @@ The file systems Status light ![md_Graphics/status_light.png][f4.1] provides a q
 
 Click **Status** to open the Status window. See MAKEREFView status messages on the Status window.
 
+<a id="4.3"></a>
+## View job stats
+
+Job statistics are available from two locations:
+
+- Clicking the Jobstats button on the top menu bar lists the top ten jobs currently in process. The listed jobs can be sorted by column and average duration can be selected. Column sorts and duration will be persistent when navigating away and back to the page.
+- Clicking on an OST cell on the Read/Write Heat Map chart.  The job statistics feature displays the read and write throughput for the top ten jobs for that OST and selected time interval. The window also shows the top Read IOPS and Write IOPS for that OST and time interval. This feature supports the creation of plug-ins to display user account, command line, job size, and job start/finish times.  Information is updated every ten seconds.  
+
+**To view job statistics**
+
+1. Before viewing job statistics, you will need to run a command to enable this feature. Run this command for each file system. The following command is an example, to run on the management server (MGS):
+
+	lctl conf_param <test1>.sys.jobid_var=procname_uid
+	
+	where <test1> is the file system name (refer to Using jobstats with other job schedulers for more information.
+1. The variable testfs.mdt.job_cleanup_interval sets the period after which collected statistics are cleared out. If this interval is to short, statistics may get cleared while you're viewing job statistics. Set this interval to a value greater than your collection/viewing period. As an example, you could set this interval to 70 minutes (4200 seconds) using the following command:
+```
+    lctl conf_param testfs.mdt.job_cleanup_interval=4200
+```
+1. View the Read/Write Heat Map chart on the dashboard window. 
+1. Each row on the Read/Write Heat Map corresponds to an OST, with consecutive columns from left-to-right, corresponding to consecutive time intervals. Mouse over a cell to find an OST and time interval of interest, and click on the desired cell.
+
+    The **Jobs Stats** window opens. The top banner reveals the OST and time interval. Each job executing during that interval is displayed as a row, with its average data throughput revealed for that interval. Only the top five read and write jobs are displayed. The window displays the Read Bytes, Write Bytes, Read OPS, and Write IOPS for the top five jobs, listed by Job ID. 
+1. To change the duration of the job statistics sampling period, return to the Read/Write Heat Map chart. Click **Change Duration** and set the time period for the heat map. If you set the time period to one day (as an example), the 24-hour period will be divided into 20 equal, consecutive cells, starting 24 hours previous and ending now. Each Read/Write Heat Map cell now covers 1.2 hours. Clicking on a cell now will reveal a job statistics window that averages 1.2 hours of read/write operations. 
+1. To send this Job Stats window to another person, select and copy the URL from browser URL field. Then paste the URL into an email message body and send. 
+
+**Note:** The Job Stats window is static, specific to that time period and OST. To view another time period or OST, return to the Read/Write Heat Map chart and select the desired cell.
+
+**Using job stats with other job schedulers**
+
+The job stats code extracts the job identifier from an environment variable set by the scheduler when the job is started. Intel® EE for Lustre* software sets a jobstats environment variable to work with SLURM, however you can set the variable to work with other job schedulers. To enable job stats to work with a desired scheduler, specify the jobid_var to name the environment variable set by the scheduler. For example, SLURM sets the SLURM_JOB_ID environment variable with the unique job ID on each client. To permanently enable jobstats on the testfs file system, run this command on the MGS:
+```
+$ lctl conf_param testfs.sys.jobid_var=<environment variable>
+```
+where ```
+<environment variable>
+```
+ is one of the following:
+
+|Job Scheduler|Environment Variable|
+|---|---|
+|Simple Linux Utility for Resource Management (SLURM)|SLURM_JOB_ID|
+|Sun Grid Engine (SGE)|JOB_ID|
+|Load Sharing Facility (LSF)|LSB_JOBID|
+|Loadleveler|LOADL_JOBID|
+|Portable Batch Scheduler (PBS)/MAUI|PBS_JOBID|
+|Cray Application Level Placement Scheduler (ALPS)|ALPS_APP_ID|
+
+To disable job stats, specify jobid_var as disable:
+
+```
+$ lctl conf_param testfs.sys.jobid_var=disable
+
+```
+
+To track job stats per process name and user ID (for debugging, or if no job scheduler is in use), specify jobid_var as procname_uid:
+
+```
+$ lctl conf_param testfs.sys.jobid_var=procname_uid
+```
+
+<a id="4.4"></a>
+## View and manage file system parameters
+
+After you have created a file system, you can view its configuration and manage the file system at the MAKEREF File System Details window. 
+
+<a id="4.5"></a>
+## View a server's detail window
+
+To view all parameters available for a server, at the menu bar, click the Configuration drop-down menu and click Servers. Select the server to view the MAKEREF Server Details window. 
+
+<a id="4.6"></a>
+## View commands and status messages on the Status window
+
+The Intel® Manager for Lustre* software provides status messages about the health of each managed file system.
+
+**View all status messages**
+
+Click **Status** to view all status messages. All messages are displayed most-recent first. Note that Warning and error messages are displayed as alerts.  The Status window displays messages in five categories:
+
+- **Command Running:** These messages are gray in color and inform you of commands that are currently in progress, running. These are commands that you have entered at the manager GUI.
+- **Command Successful:** These messages are green in color and identify commands that have completed successfully. You can click **Details** and then click the command link to learn about underlying commands and their syntax. 
+- **Info messages:** These messages are displayed in blue. Events are normal transitions that occur during the creation or management of the file system, often in response to a command entered at the GUI. A single command may cause several events to occur. An event message informs you of an event occurring at a single point in time. 
+- **Warning alerts:** Warnings are displayed in orange. A warning usually indicates that the file system is operating in a degraded mode, for example a target has failed over so that high availability is no longer true for that target. A warning message marks a status change that has a specific **Begin** and **End** time. A warning is active at the beginning of the status change and inactive at the end of the status change. 
+- **Errors alerts:** Errors are displayed in red. An error message indicates that the file system is down or severely degraded. One or more file system components are currently unavailable, for example both primary and secondary servers for a target are not running. An error often has a remedial action you can take by clicking the button.
+
+For more information see MAKEREF Status window.
+
+<a id="4.7"></a>
+## View Logs
+
+Click **Logs** on the menu bar to view all system logs.  
+
+The Logs window displays log information and allows filtering of events by date range, host, service, and messages from Lustre or all sources. 
+The logs window also features querying with auto-complete and linkable host names.
+
+<a id="4.8"></a>
+## View HSM Copytool activities
+
+To view current copytool activities, click **Configuration** and select **HSM**. To learn about HSM capabilities supported in Intel® Enterprise Edition for Lustre* software, see MAKEREF Configuring and using Hierarchical Storage Management.
+
+After HSM has setup for a file system, this HSM Copytool chart displays a moving time-line of waiting copytool requests, current copytool operations, and the number of idle copytool workers.
+
+![md_Graphics/HSM_Operations.png][f4.4]
+
+- Select to display copytool operations for all file systems (default) or one you select.
+- Mouse over the graph to learn the specific values at a given point in time.
+- Click **Actions > Disable** to pause HSM for this file system. New requests will be scheduled and HSM activities will resume after the HSM coordinator is enabled. To enable again, click **Actions > Enable**. 
+- Click **Actions > Shutdown** to stop the HSM coordinator for this file system. No new requests will be scheduled.
+- Use **Change Duration** to change the time period for the range of data displayed on the HSM Copytool chart. chart. The chart begins at a start time set and ends now. You can set this to select **Minutes**, **Hours**, **Days** or **Weeks**, up to four weeks back in time and ending now. The most recent data displayed on the right. The number of data points will vary, based primarily on the duration.
+
 
 [f4.1]:md_Graphics/status_light.png
 [f4.2]:md_Graphics/yellow_status.png
 [f4.3]:md_Graphics/red_status.png
+[f4.4]:md_Graphics/HSM_Operations.png
