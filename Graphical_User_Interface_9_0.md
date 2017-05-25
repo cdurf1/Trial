@@ -52,7 +52,7 @@ This window identifies the:
 
 
 This window also identifies the volume(s), primary server(s), and failover server(s) for the MGS, MDT(s) and all OST(s). From this window you can MAKEREFUpdate Advanced Settings and MAKEREF
-<a href="Creating_new_lustre_fs_3_0.md#3.11">Creating_new_lustre_fs_3_0.md View Client Mount Information.
+<a href="#Creating_new_lustre_fs_3_0.md#3.11">Creating_new_lustre_fs_3_0.md View Client Mount Information.
 
 <a id="9.1.2"></a>
 ### Configuring the Dashboard
