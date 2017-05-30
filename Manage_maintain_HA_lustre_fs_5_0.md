@@ -5,8 +5,7 @@
 
 Before performing any upgrades or maintenance on a primary HA server, all file system targets attached to that server must be manually failed over to the secondary server, using the Intel® for Manager Lustre* software. DO NOT independently shut the server down. 
 
-In addition to the links below, see MAKEREF Advanced topics.
-MAKEREFS
+In addition to the links below, see <a href="Advanced_Topics_10_0.md/#10.0">Advanced topics</a>.
 
 - <a href="#5.1">Increase a file system's storage capacity</a>
 - <a href="#5.2">Add an object storage target to a managed file system</a>
@@ -26,7 +25,7 @@ MAKEREFS
 <a id="5.1"></a>
 ## Increase a file system's storage capacity
 
-Perform the following procedures to increase a file system's storage capacity. This section applies to managed, high-availability file systems. For instructions on increasing the capacity a monitored file system, see MAKEREF Detect and monitor existing Lustre file systems.
+Perform the following procedures to increase a file system's storage capacity. This section applies to managed, high-availability file systems. For instructions on increasing the capacity a monitored file system, see <a href="Detect_and_monitor_existing_LFS_7_0.md/#7.0">Detect and monitor existing Lustre file systems</a>.
 
 **Add a storage server**
 
@@ -165,7 +164,7 @@ To prompt the manager software to detect new NIDs and update file system targets
 1. A new column appears on the far right: *Select Server*. All servers are selected by default. Select the servers for which you want to rewrite NIDs. Then click **Re-write Target Configuration**.
 1. The manager queries the network interfaces on the storage servers. Each target is updated with the current NID for the server with which it is associated. To check that the manager has detected the correct NID for a server, click the *Hostname* of the server to display a detailed view of the server. Scroll down to the NID Configuration section to view the network interface, IP Address, driver, and network for each NID.
 
-You can also directly edit the NID configuration for a server, but to do this, the server cannot belong to an existing Lustre file system. See MAKEREF NID Configuration.
+You can also directly edit the NID configuration for a server, but to do this, the server cannot belong to an existing Lustre file system. See <a href="Graphical_User_Interface_9_0.md/#9.3.1.1">NID Configuration</a>.
 
 **WARNING:** For Lustre* file systems created and managed by Intel® Manager for Lustre* software, the only supported command line interface is the CLI provided by Intel® Manager for Lustre* software. Modifying such a Lustre file system manually from a UNIX shell will interfere with the ability of Intel® Manager for Lustre* software to manage and monitor the file system. 
 
@@ -192,14 +191,14 @@ To perform any of these commands:
 <a id="5.11"></a>
 ## Reconfiguring Corosync and Pacemaker for a server
 
-Pacemaker and Corosync configuration is required for each server if you are creating or expanding a high-availability file system.  Intel® Manager for Lustre* software automatically configures Corosync and Pacemaker for each managed HA server that you add, so that manual configuration of Pacemaker and Corosync should not normally be required. See MAKEREF Add one or more HA servers. 
+Pacemaker and Corosync configuration is required for each server if you are creating or expanding a high-availability file system.  Intel® Manager for Lustre* software automatically configures Corosync and Pacemaker for each managed HA server that you add, so that manual configuration of Pacemaker and Corosync should not normally be required. See <a href="Creating_new_lustre_fs_3_0.md/#3.4">Add one or more HA servers</a>. 
 
-An administrator may need to reset or configure Pacemaker or Corosync when performing maintenance on a server, altering the server's configuration, or troubleshooting problems with those services.  See MAKEREFPacemaker configuration and MAKEREFCorosync configuration for more information.
+An administrator may need to reset or configure Pacemaker or Corosync when performing maintenance on a server, altering the server's configuration, or troubleshooting problems with those services.  See <a href="Graphical_User_Interface_9_0.md/#9.3.1.1">Pacemaker configuration</a> and <a href="Graphical_User_Interface_9_0.md/#9.3.1.1">Corosync configuration</a> for more information.
 
 <a id="5.12"></a>
 ## Reconfiguring NIDs for a server
 
-Intel® Manager for Lustre* software automatically configures NIDs for each managed server that you add, so that manual NID configuration should not normally be required. However, an administrator may need to reconfigure NIDs for a server when performing maintenance on a server, altering the server's configuration, or troubleshooting problems network interfaces.  See MAKEREF NID Configuration.
+Intel® Manager for Lustre* software automatically configures NIDs for each managed server that you add, so that manual NID configuration should not normally be required. However, an administrator may need to reconfigure NIDs for a server when performing maintenance on a server, altering the server's configuration, or troubleshooting problems network interfaces.  See <a href="Graphical_User_Interface_9_0.md/#9.3.1.1">NID Configuration</a>.
 
 <a id="5.13"></a>
 ## Decommission a server for an MGT, MDT, or OST

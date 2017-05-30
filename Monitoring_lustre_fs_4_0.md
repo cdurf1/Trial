@@ -39,14 +39,13 @@ See:
 ### View charts for one or all file systems
 
 When you first login, the Dashboard displays the following six charts for all file systems combined. Click on the links here to learn more.
-MAKEREFS
 
-- Read/Write Heat Map chart
-- OST Balance chart
-- Metadata Operations chart
-- Read/Write Bandwidth chart
-- Metadata Servers chart
-- Object Storage Servers chart
+- <a href="Graphical_User_Interface_9_0.md/#9.2.1">Read/Write Heat Map chart</a>
+- <a href="Graphical_User_Interface_9_0.md/#9.2.3">OST Balance chart</a>
+- <a href="Graphical_User_Interface_9_0.md/#9.2.4">Metadata Operations chart</a>
+- <a href="Graphical_User_Interface_9_0.md/#9.2.5">Read/Write Bandwidth chart</a>
+- <a href="Graphical_User_Interface_9_0.md/#9.2.6">Metadata Servers chart</a>
+- <a href="Graphical_User_Interface_9_0.md/#9.2.7">Object Storage Servers chart</a>
 
 To view these six charts for a single file system:
 
@@ -75,11 +74,10 @@ Viewing charts for all servers is the same thing as viewing charts for all file 
 1. Under Server, select the server of interest and click Update.
 
 The following charts are displayed for an individual server. Click on the links to learn about these charts. 
-MAKEREFS
 
-- Read/Write Bandwidth
-- CPU Usage
-- Memory Usage
+- <a href="Graphical_User_Interface_9_0.md/#9.2.4">Read/Write Bandwidth</a>
+- <a href="Graphical_User_Interface_9_0.md/#9.2.7">CPU Usage</a>
+- <a href="Graphical_User_Interface_9_0.md/#9.2.8">Memory Usage</a>
 
 
 <a id="4.1.3"></a>
@@ -93,18 +91,16 @@ To view charts for a specific OST or MDT:
 1. At the Target drop-down menu, select the desired target. Then click **Update**.
 
 The following charts are displayed for OSTs. Click on the links here to learn about these charts.
-MAKEREF
 
-- Read/Write Bandwidth
-- Space Usage
-- Object Usage
+- <a href="Graphical_User_Interface_9_0.md/#9.2.4">Read/Write Bandwidth</a>
+- <a href="Graphical_User_Interface_9_0.md/#9.2.9">Space Usage</a>
+- <a href="Graphical_User_Interface_9_0.md/#9.2.11">Object Usage</a>
 
 The following charts are displayed for MDTs:
-MAKEREF
 
-- Metadata Operations
-- Space Usage
-- File Usage
+- <a href="Graphical_User_Interface_9_0.md/#9.2.3">Metadata Operations</a>
+- <a href="Graphical_User_Interface_9_0.md/#9.2.9">Space Usage</a>
+- <a href="Graphical_User_Interface_9_0.md/#9.2.10">File Usage</a>
 
 <a id="4.2"></a>
 ## Check file systems status
@@ -115,7 +111,7 @@ The file systems Status light ![md_Graphics/status_light.png][f4.1] provides a q
 - A yellow Status light ![md_Graphics/yellow_status.png][f4.2] indicates that one or more warning alerts have been received. The file system may be operating in a degraded mode, for example a target has failed over, so performance may be degraded. 
 - A red Status light ![md_Graphics/red_status.png][f4.3] indicates that one or more errors alerts have been received. This file system may be down or is severely degraded. One or more file system components may be currently unavailable, for example, both the primary and secondary servers for a target are not running.
 
-Click **Status** to open the Status window. See MAKEREFView status messages on the Status window.
+Click **Status** to open the Status window. See <a href="#4.6">View status messages on the Status window</a>.
 
 <a id="4.3"></a>
 ## View job stats
@@ -181,12 +177,12 @@ $ lctl conf_param testfs.sys.jobid_var=procname_uid
 <a id="4.4"></a>
 ## View and manage file system parameters
 
-After you have created a file system, you can view its configuration and manage the file system at the MAKEREF File System Details window. 
+After you have created a file system, you can view its configuration and manage the file system at the <a href="Graphical_User_Interface_9_0.md/#9.1.1">File System Details window</a>. 
 
 <a id="4.5"></a>
 ## View a server's detail window
 
-To view all parameters available for a server, at the menu bar, click the Configuration drop-down menu and click Servers. Select the server to view the MAKEREF Server Details window. 
+To view all parameters available for a server, at the menu bar, click the Configuration drop-down menu and click Servers. Select the server to view the <a href="Graphical_User_Interface_9_0.md/#9.3.1.1">Server Details window</a>. 
 
 <a id="4.6"></a>
 ## View commands and status messages on the Status window
@@ -203,7 +199,7 @@ Click **Status** to view all status messages. All messages are displayed most-re
 - **Warning alerts:** Warnings are displayed in orange. A warning usually indicates that the file system is operating in a degraded mode, for example a target has failed over so that high availability is no longer true for that target. A warning message marks a status change that has a specific **Begin** and **End** time. A warning is active at the beginning of the status change and inactive at the end of the status change. 
 - **Errors alerts:** Errors are displayed in red. An error message indicates that the file system is down or severely degraded. One or more file system components are currently unavailable, for example both primary and secondary servers for a target are not running. An error often has a remedial action you can take by clicking the button.
 
-For more information see MAKEREF Status window.
+For more information see <a href="Graphical_User_Interface_9_0.md/#9.3.4">Status window</a>.
 
 <a id="4.7"></a>
 ## View Logs
@@ -216,7 +212,7 @@ The logs window also features querying with auto-complete and linkable host name
 <a id="4.8"></a>
 ## View HSM Copytool activities
 
-To view current copytool activities, click **Configuration** and select **HSM**. To learn about HSM capabilities supported in Intel® Enterprise Edition for Lustre* software, see MAKEREF Configuring and using Hierarchical Storage Management.
+To view current copytool activities, click **Configuration** and select **HSM**. To learn about HSM capabilities supported in Intel® Enterprise Edition for Lustre* software, see <a href="Config_and_using_HSM_6_0.md/#6.0">Configuring and using Hierarchical Storage Management</a>.
 
 After HSM has setup for a file system, this HSM Copytool chart displays a moving time-line of waiting copytool requests, current copytool operations, and the number of idle copytool workers.
 

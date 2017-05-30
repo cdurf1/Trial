@@ -17,7 +17,7 @@ The procedures in this section assume that you have first assembled and configur
 
 To create and manage an OpenZFS-based Lustre file system that is highly-available and managed by Intel® Manager for Lustre* software, perform these steps:
 
-1. Add all of the physical servers that will comprise your ZFS-based Lustre file system. To do this, perform the steps in MAKEREF Add one or more HA servers. Add each server as a *Managed Storage Server*.
+1. Add all of the physical servers that will comprise your ZFS-based Lustre file system. To do this, perform the steps in <a href="Creating_new_lustre_fs_3_0.md/#3.4">Add one or more HA servers</a>. Add each server as a *Managed Storage Server*.
     
     **Note:**  Steps 2 and 3 below are performed automatically by Intel® Manager for Lustre* software and do not need to be performed.  They are included here for topic coverage only. Continue with Step 4.
 1. Having added the servers, you now need to ensure that the server hostids are set before creating any zpools. Each server requires a unique hostid to be configured. Setting the hostid on each server will allow ZFS to apply an attribute on each zpool indicating which host currently has the pool imported. This provides some protection in ZFS against multiple simultaneous imports of zpools when the storage is connected to more than one server. To set the hostid, run the genhostid command on each host and reboot. In the document *Lustre\* Installation and Configuration using Intel® EE for Lustre\* Software and OpenZFS*, see the section *Protecting File System Volumes from Concurrent Access* for more information.
@@ -84,10 +84,10 @@ zpool create -O canmount=off \
 **Note:** See the document *Lustre\* Installation and Configuration using Intel® EE for Lustre\* Software and OpenZFS* for descriptions of the ashift and recordsize properties. RAIDZ2 is the preferred vdev configuration for OSTs, and we recommend an arrangement of at least 11 disks (9+2) per RAIDZ2 vdev for best performance. The pool naming convention is based on the Lustre file system name and OST index number, starting at 0 (zero).
 
     The remainder of this procedure is performed at the Intel® Manager for Lustre* software GUI. 
-1. For high-availability, configure your servers as primary and fail-over servers for each zpool.  Perform the steps in MAKEREF Configure primary and fail-over servers.
-1. If you are using power distribution units (PDUs) for power control, then for each server, perform the steps in MAKEREF Add power distribution units.  Then perform the steps in MAKEREF Assign PDU outlets to servers for each server.
-1. If you are using Baseboard Management Controllers (BMCs) for power control, then perform the steps in MAKEREF Assign BMCs to servers for each server.  
-1. Perform the steps in MAKEREF Create the new Lustre file system, using the zpools you created in step 4 above as object storage targets (volumes), rather than direct block devices.  Each ZFS pool that you created will appear as a target, with the Type identified as a **ZfsPool**.
+1. For high-availability, configure your servers as primary and fail-over servers for each zpool.  Perform the steps in <a href="Creating_new_lustre_fs_3_0.md/#3.5">Configure primary and fail-over servers</a>.
+1. If you are using power distribution units (PDUs) for power control, then for each server, perform the steps in <a href="Creating_new_lustre_fs_3_0.md/#3.6">Add power distribution units</a>.  Then perform the steps in <a href="Creating_new_lustre_fs_3_0.md/#3.7">Assign PDU outlets to servers</a> for each server.
+1. If you are using Baseboard Management Controllers (BMCs) for power control, then perform the steps in <a href="Creating_new_lustre_fs_3_0.md/#3.8">Assign BMCs to servers</a> for each server.  
+1. Perform the steps in <a href="Creating_new_lustre_fs_3_0.md/#3.0">Create the new Lustre file system</a>, using the zpools you created in step 4 above as object storage targets (volumes), rather than direct block devices.  Each ZFS pool that you created will appear as a target, with the Type identified as a **ZfsPool**.
 
 <a id="8.2"></a>
 ## Importing and exporting ZFS pools in a shared-storage high-availability cluster

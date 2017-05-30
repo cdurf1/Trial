@@ -1,7 +1,7 @@
 # Getting started
 <a id="2.0"></a>
 
-A high-availability Lustre file system managed by Intel® Manager for Lustre* software requires that your entire storage system configuration and all  interfaces comply with a pre-defined configuration.  For detailed information, see the section High Availability Configuration Specification in the Intel® Enterprise Edition for Lustre* Software Installation Guide. Also see the guide Lustre* Installation and Configuration using Intel® EE for Lustre* Software and OpenZFS.
+A high-availability Lustre file system managed by Intel® Manager for Lustre* software requires that your entire storage system configuration and all  interfaces comply with a pre-defined configuration.  For detailed information, see the section High Availability Configuration Specification in the *Intel® Enterprise Edition for Lustre\* Software Installation Guide*. Also see the guide *Lustre\* Installation and Configuration using Intel® EE for Lustre\* Software and OpenZFS*.
 
 **Note:** All references herein to the "manager" refer to the Intel® Manager for Lustre* software.
 The Intel® Manager for Lustre* software can be used to:
@@ -11,10 +11,10 @@ Monitor existing Lustre* file systems that have not been configured from the man
 See the following information to get started:
 
 - For procedures for installing the Intel® Enterprise Edition for Lustre* software, including Intel® Manager for Lustre* software, and for completing initial configuration steps, see the documentation provided by your storage solution provider. 
-- To set up superuser and user accounts on Intel® Manager for Lustre* software see: MAKEREF Creating user accounts.
-- Also see: MAKEREF Setting up email notifications of alerts.
-- To create a new Lustre file system using Intel® Manager for Lustre* software, see: MAKEREF Creating a new Lustre* file system.
-- To detect and monitor an existing Lustre file system using Intel® Manager for Lustre* software, see: MAKEREF Detect and monitor existing Lustre* file systems.
+- To set up superuser and user accounts on Intel® Manager for Lustre* software see: <a href="#2.1">Creating user accounts</a>.
+- Also see: <a href="#2.2">Setting up email notifications of alerts</a>.
+- To create a new Lustre file system using Intel® Manager for Lustre* software, see: <a href="Creating_new_lustre_fs_3_0.md/#3.0">Creating a new Lustre* file system</a>.
+- To detect and monitor an existing Lustre file system using Intel® Manager for Lustre* software, see: <a href="Detect_and_monitor_existing_LFS_7_0.md/#7.0">Detect and monitor existing Lustre* file systems</a>.
 
 **WARNING:** For Lustre* file systems created and managed by Intel® Manager for Lustre* software, the only supported command line interface is the CLI provided by Intel® Manager for Lustre* software. Modifying such a Lustre file system manually from a UNIX shell will interfere with the ability of the Intel® Manager for Lustre* software to manage and monitor the file system. 
 
@@ -33,7 +33,7 @@ To create user accounts:
     b) **Superuser -** A superuser has full access to the application, including the Configuration drop-down menu and all sub-menus. A superuser can create, monitor, manage, and remove file system and their components. A superuser create, modify (change passwords), and delete users. A superuser cannot delete their own account, but a superuser can create or delete another superuser. 
     
 1. Fill out the remainder of the *Create user* dialogue window and click **Create**.
-1. To set up email notifications of alerts for a user, see Setting up email notifications of alerts.
+1. To set up email notifications of alerts for a user, see <a href="#2.2">Setting up email notifications of alerts</a>.
 
 **More about roles**
 
@@ -43,7 +43,7 @@ After logging in, a user can modify their own account by clicking Account near t
 
 - **Details -** Username, email address, and first and last name can be changed.
 - **Password -** Password can be changed and confirmed.
-- **Email Notifications -** The types of events for which this account will receive emailed notifications can be selected from a checklist. If no notifications are selected, email notifications will be sent for all alerts except “Host contact alerts”. See MAKEREF Setting up Email Notifications.
+- **Email Notifications -** The types of events for which this account will receive emailed notifications can be selected from a checklist. If no notifications are selected, email notifications will be sent for all alerts except “Host contact alerts”. See <a href="#2.2">Setting up Email Notifications</a>.
 
 **Note:** Unauthenticated users can access the static HTML content present on the Intel® Manager for Lustre* GUI, but the display will not be populated with current system information unless the user is authenticated. See the documentation provided by your storage solution provider for how to configure Intel® Manager for Lustre* software to require all users to log in to see any data.
 
@@ -62,8 +62,8 @@ To set up email notifications:
 
     - **Host contact alert -** Host lost contact with a server.
     - **LNet offline alert -** LNet is offline for a server.
-    - **LNet NIDs changed alert -** See MAKEREFHandling Network Address Changes.
-    - **LNet NIDs changed on server <server name> -** See MAKEREFHandling Network Address Changes.
+    - **LNet NIDs changed alert -** See <a href="Manage_maintain_HA_lustre_fs_5_0.md/#5.0">Handling Network Address Changes</a>.
+    - **LNet NIDs changed on server <server name> -** See <a href="Manage_maintain_HA_lustre_fs_5_0.md/#5.0">Handling Network Address Changes</a>.
     - **Target offline alert -** A target has gone offline.
     - **Target failover alert -** A target is currently running on its secondary server.
     - **Target recovery alert -** A target is in recovery.

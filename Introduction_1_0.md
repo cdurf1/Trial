@@ -59,15 +59,15 @@ Following are key features provided by Intel® Enterprise Edition for Lustre* so
 
 **GUI-based creation and management of Lustre\* file systems**
 
-The Intel® Manager for Lustre* software provides a powerful, yet easy-to-use GUI that enables rapid creation of Lustre file systems. The GUI supports easy configuration for high availability and expansion, and enables performance monitoring and management of multiple Lustre file systems. See MAKEREF Creating a new Lustre* file system.
+The Intel® Manager for Lustre* software provides a powerful, yet easy-to-use GUI that enables rapid creation of Lustre file systems. The GUI supports easy configuration for high availability and expansion, and enables performance monitoring and management of multiple Lustre file systems. See <a href="Creating_new_lustre_fs_3_0.md/#3.0">Creating a new Lustre* file system</a>.
 
 **Graphical charts display real-time performance metrics**
 
-Fully-configurable color charts display a variety of real-time performance metrics for single or multiple file systems, down to individual servers and targets, and reveal metrics such as read/write heat maps, OST balance, file system capacity, metadata operations, read/write operations, job statistics, and various resource usage parameters, among others. See MAKEREF View charts on the Dashboard.
+Fully-configurable color charts display a variety of real-time performance metrics for single or multiple file systems, down to individual servers and targets, and reveal metrics such as read/write heat maps, OST balance, file system capacity, metadata operations, read/write operations, job statistics, and various resource usage parameters, among others. See <a href="Monitoring_lustre_fs_4_0.md/#4.0">View charts on the Dashboard</a>.
 
 **Auto-configured high-availability clustering for server pairs**
 
-Pacemaker and Corosync are configured automatically when the system design follows configuration guidance. This removes the need for manually installing HA configuration files on storage servers, and simplifies high-availability configuration. See MAKEREF High-availability file system support.
+Pacemaker and Corosync are configured automatically when the system design follows configuration guidance. This removes the need for manually installing HA configuration files on storage servers, and simplifies high-availability configuration. See <a href="Creating_new_lustre_fs_3_0.md/#3.3">High-availability file system support.
 
 **PDU configuration and server outlet assignments support automatic failover**
 
@@ -95,7 +95,7 @@ The Robinhood policy engine has been incorporated into Lustre and is included wi
 
 **Apache Hadoop\* adapter software**
 
-Intel® EE for Lustre* software is supported by the Apache Hadoop* adapter software, however the adapter software is a separate download. This Hadoop adapter for Lustre is compatible with the Apache Hadoop software, versions 2.3 and 2.5 as of this writing.  Hadoop software allows users who run MapReduce jobs to bypass storing data in HDFS, and store the MapReduce output directly to Lustre instead. This allows the analytical processes direct access to scientific output instead of transferring data from the compute cluster storage system to another file system. Optimizations have also been made to the shuffle step in MapReduce to take advantage of Lustre’s high-speed network access to data. Many workloads will see an overall reduction in end-to-end processing time by using the Hadoop adapter with the Intel® EE for Lustre* software file system.  For more information, see Installing Hadoop, the MAKEREF Hadoop Adapter for Intel® EE for Lustre* Software, and the MAKEREF Job Scheduler Integration.
+Intel® EE for Lustre* software is supported by the Apache Hadoop* adapter software, however the adapter software is a separate download. This Hadoop adapter for Lustre is compatible with the Apache Hadoop software, versions 2.3 and 2.5 as of this writing.  Hadoop software allows users who run MapReduce jobs to bypass storing data in HDFS, and store the MapReduce output directly to Lustre instead. This allows the analytical processes direct access to scientific output instead of transferring data from the compute cluster storage system to another file system. Optimizations have also been made to the shuffle step in MapReduce to take advantage of Lustre’s high-speed network access to data. Many workloads will see an overall reduction in end-to-end processing time by using the Hadoop adapter with the Intel® EE for Lustre* software file system.  For more information, see Installing Hadoop, the Hadoop Adapter for Intel® EE for Lustre* Software, and the Job Scheduler Integration.
 
 **Automated Provisioning of Custom Lustre Service Nodes**
 
@@ -109,7 +109,7 @@ The installation strategy removes the need to manually install the software on e
 
 **Support for OpenZFS in Management Mode**
 
-Intel® EE for Lustre* software supports ZFS as a back-end file system replacement for ldiskfs.  Intel® Manager for Lustre* software is able to configure and manage high-availability Lustre storage solutions, and Intel® EE for Lustre* software can discover and manage ZFS file systems. See MAKEREF Creating and Managing ZFS-based Lustre file systems.
+Intel® EE for Lustre* software supports ZFS as a back-end file system replacement for ldiskfs.  Intel® Manager for Lustre* software is able to configure and manage high-availability Lustre storage solutions, and Intel® EE for Lustre* software can discover and manage ZFS file systems. See <a href="Create_and_manage_ZFS_based_LFS_8_0.md/#8.0">Creating and Managing ZFS-based Lustre file systems</a>.
 
 **Intel® EE for Lustre\* Software ZFS Snapshots**
 
@@ -193,7 +193,7 @@ Monitor-only mode can be used to establish monitoring for file systems that don�
 <a id="1.4"></a>
 ## Overview of the graphical user interface
 
-This section provides an overview of the Intel® Manager for Lustre* software GUI. For a complete description of the GUI, see Graphical User Interface.
+This section provides an overview of the Intel® Manager for Lustre* software GUI. For a complete description of the GUI, see <a href="Graphical_User_Interface_9_0.md/#9.0">Graphical User Interface</a>.
 
 The Intel® Manager for Lustre* software GUI presents a set of intuitive windows that let you set up, configure, monitor, and manage Lustre* file systems. The menu bar provides access to these capabilities.  Click the following links for overview information:
 
@@ -238,21 +238,19 @@ The Dashboard window presents several charts that display rich visual informatio
   
 
 
-The following twelve charts are presented. For more information, see View charts on the Dashboard.
+The following twelve charts are presented. For more information, see <a href="Monitoring_lustre_fs_4_0.md/#4.1">View charts on the Dashboard</a>.
 
-MAKEREFs:
-
-- Read/Write Heat Map chart
-- OST Balance chart
-- Metadata Operations chart
-- Read/Write Bandwidth chart
-- Metadata Servers chart
-- Object Storage Servers chart
-- CPU Usage chart
-- Memory Usage chart
-- Space Usage chart
-- File Usage chart
-- Object Usage chart
+- <a href="Graphical_User_Interface_9_0.md/#9.2.1">Read/Write Heat Map chart</a>
+- <a href="Graphical_User_Interface_9_0.md/#9.2.2">OST Balance chart</a>
+- <a href="Graphical_User_Interface_9_0.md/#9.2.3">Metadata Operations chart</a>
+- <a href="Graphical_User_Interface_9_0.md/#9.2.4">Read/Write Bandwidth chart</a>
+- <a href="Graphical_User_Interface_9_0.md/#9.2.5">Metadata Servers chart</a>
+- <a href="Graphical_User_Interface_9_0.md/#9.2.6">Object Storage Servers chart</a>
+- <a href="Graphical_User_Interface_9_0.md/#9.2.7">CPU Usage chart</a>
+- <a href="Graphical_User_Interface_9_0.md/#9.2.8">Memory Usage chart</a>
+- <a href="Graphical_User_Interface_9_0.md/#9.2.9">Space Usage chart</a>
+- <a href="Graphical_User_Interface_9_0.md/#9.2.10">ile Usage chart</a>
+- <a href="Graphical_User_Interface_9_0.md/#9.2.11">Object Usage chart</a>
 
 <a id="1.4.4"></a>
 ### Configuration menu
@@ -273,7 +271,7 @@ The Configuration drop-down menu provides access to the following several window
 
 Clicking the Jobstats button on the top menu bar lists the top ten jobs currently in process. The listed jobs can be sorted by column and average duration can be selected. Column sorts and duration will be persistent when navigating away and back to the page.
 
-**Note:** Job stats need to be enabled before then can be viewed. See MAKEREF View Job stats.
+**Note:** Job stats need to be enabled before then can be viewed. See <a href="Monitoring_lustre_fs_4_0.md/#4.3">View Job stats</a>.
 
 <a id="f1.5"></a>
 ![./md_Graphics/job_stats.png][f1.5]
@@ -304,7 +302,7 @@ The Status indicator provides information about the functioning and health of ea
 - A green light ![./md_Graphics/status_light.png][f1.7] indicates that all is normal. Note that a green light does not indicate anything about file system performance.
 - A yellow light ![./md_Graphics/yellow_status.png][f1.8] indicates that one or more warning alerts have been received. The file system may be operating in a degraded mode, for example a target has failed over, so performance may be degraded.
 - A red light ![./md_Graphics/red_status.png][f1.9] indicates that one or more errors alerts have been received. This file system may be down or is severely degraded.
-The Status window displays information alerts, commands that are executing, and events. For more information, see MAKEREF Status window.
+The Status window displays information alerts, commands that are executing, and events. For more information, see <a href="Graphical_User_Interface_9_0.md/#9.6">Status window</a>.
 
 <a id="f1.9"></a>
 ![./md_Graphics/status_page.png][f1.10]

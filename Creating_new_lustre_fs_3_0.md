@@ -5,7 +5,7 @@ This chapter describes how to create a new Lustre* file system, to be managed fr
 
 **Note:** All references herein to the manager refer to the Intel® Manager for Lustre* software.
 
-**Note:** The procedure for creating a Lustre file system *based on ZFS zpools* is different. For that information see MAKEREF Creating and Managing ZFS-based Lustre file systems.
+**Note:** The procedure for creating a Lustre file system *based on ZFS zpools* is different. For that information see <a href="Create_and_manage_ZFS_based_LFS_8_0.md/#8.0">Creating and Managing ZFS-based Lustre file systems</a>.
 
 1. <a href="#3.1">Prerequisites for creating an HA file system</a>
 1. <a href="#3.2">Important information about reconfiguring your file system</a>
@@ -80,21 +80,21 @@ To add a server to be used for the file system:
 1. At the *Add Server - Add Server Profiles* window, select the desired profile from the drop-down menu. Note that one profile type is selected for all servers you are adding in this process. The common profiles are listed next, but your software may have more server profiles. 
     - **Managed Storage Server for EL7.2:** As above, this allows the manager GUI to configure Corosync and Pacemaker, configure NTP, etc., so that the manager software can monitor and manage the server. Managed storage servers must be physically configured for high-availability/server failover. This profile is for servers running RHEL 7.2. (In our example below, none of the servers being configuring are running RHEL 7.2, so the warning **Incompatible**, is displayed.)
     - **Monitored Storage Server:** This is for servers that are not correctly configured for HA/failover (as far as this software is concerned). A monitored storage server is monitored only; the manager GUI performs no such server configuration or management. Note that ZFS file systems use this profile. However the Dashboard will still display charts showing file system operations.
-    - **POSIX HSM Agent Node:** An HSM Agent node is used in hierarchical storage management to run an instance of Copytool. Copytool transfers certain files between the Lustre file system and the archive and deletes from the Lustre file system those files that have been archived. See MAKEREFConfiguring and using Hierarchical Storage Management
-    - **Robinhood Policy Engine Server:** This server hosts the Robinhood policy engine, which enables automation of hierarchical storage management activities. See MAKEREFConfiguring and using Hierarchical Storage Management.
+    - **POSIX HSM Agent Node:** An HSM Agent node is used in hierarchical storage management to run an instance of Copytool. Copytool transfers certain files between the Lustre file system and the archive and deletes from the Lustre file system those files that have been archived. See <a href="Config_and_using_HSM_6_0.md/#6.0">Configuring and using Hierarchical Storage Management</a>
+    - **Robinhood Policy Engine Server:** This server hosts the Robinhood policy engine, which enables automation of hierarchical storage management activities. See <a href="Config_and_using_HSM_6_0.md/#6.0">Configuring and using Hierarchical Storage Management</a>.
 1. Select the desired profile and click **Proceed**. The manager does an audit of the storage resources on each server. The manager then provisions the server by loading appropriate Lustre modules and making sure the Lustre networking layer is functioning. When all checks are completed, LNet State indicates LNet Up and each server is fully qualified as a Lustre server. Under the Status column, a green check mark is displayed for each new server. If server provisioning does not succeed, the Status will indicate a exclamation mark (!) and the LNet State may indicate Unconfigured. To learn the cause of the problem, click the exclamation mark for the failed server to see Alerts. For more information, click **Status** at the top menu bar. The *Status* window also lets you view related logs.
 
     **Note:** A certain profile may not be compatible with a server as the server is configured. If the profile you select is not compatible with the server(s) you specified, a warning is displayed: Incompatible. Each incompatible server is represented by a red box. To learn why a server is incompatible, click on a red box. A pop-up window reveals the problem. You can resolve the problem and the red box will change to green, indicating profile compatibility with the server. 
 
-    **Caution:** For servers with incompatible profiles, you have the option of clicking **Override**, however, this is not encouraged or supported. Each server's configuration must be compatible with the selected profile, or the server will likely not function as required for the selected profile. The four available default server profiles are described above. For more information about the POSIX HSM Agent Node and Robinhood Policy Engine Server profiles, see MAKEREFConfiguring and using Hierarchical Storage Management herein.
-1. Click **Close**. This process is complete. For HA file systems, proceed to MAKEREFConfigure primary and failover servers. 
+    **Caution:** For servers with incompatible profiles, you have the option of clicking **Override**, however, this is not encouraged or supported. Each server's configuration must be compatible with the selected profile, or the server will likely not function as required for the selected profile. The four available default server profiles are described above. For more information about the POSIX HSM Agent Node and Robinhood Policy Engine Server profiles, see <a href="Config_and_using_HSM_6_0.md/#1.0">Configuring and using Hierarchical Storage Management</a> herein.
+1. Click **Close**. This process is complete. For HA file systems, proceed to <a href="#3.5">Configure primary and failover servers</a>. 
 
 <a id="3.5"></a>
 ## Assign primary and failover servers to storage volumes
 
 This section establishes the primary and failover storage servers for each volume, to support-high availability.
 
-**Caution:** Configuring primary and failover servers on the Volumes window does not by itself enable high-availability. Automated failover also requires power management support by PDUs and outlet assignments or by assigning BMCs to servers. See Add power distribution units or Assign BMCs to servers. It is important to remember these server/volume configurations for when configuring power distribution units (PDUs) and outlet-server assignments.
+**Caution:** Configuring primary and failover servers on the Volumes window does not by itself enable high-availability. Automated failover also requires power management support by PDUs and outlet assignments or by assigning BMCs to servers. See <a href="#3.6">Add power distribution units</a> or <a href="#3.8">Assign BMCs to servers</a>. It is important to remember these server/volume configurations for when configuring power distribution units (PDUs) and outlet-server assignments.
 
 **Note:** This section is for configuring managed storage servers, as previously set up in Add storage servers. This section does not apply to servers that are monitor-only. 
 To view the volumes that were discovered and make adjustments to volume configurations, complete these steps: 
@@ -108,7 +108,7 @@ Changes you select to make on this Volumes Configuration window will be updated 
     
 **Note:** There is currently no lock-out of one user's changes versus changes made by another user. The most-recently applied setting is the one in-force.
 
-Next, proceed to MAKEREFAdd power distribution units or MAKEREFAssign BMCs to servers. It is important to remember these server/volume configurations for when configuring power distribution units (PDUs) and outlet-server assignments.
+Next, proceed to <a href="#3.7">Add power distribution units</a> or <a href="#3.8">Add power distribution units</a>Assign BMCs to servers</a>. It is important to remember these server/volume configurations for when configuring power distribution units (PDUs) and outlet-server assignments.
 
 <a id="3.6"></a>
 ## Add power distribution units
@@ -117,7 +117,7 @@ This section configures power distribution units (PDUs) and assigns PDU outlets 
 
 **Note:** A server cannot be associated with both a BMC and PDU outlets. Use PDUs or IPMI/BMCs to support failover.
 
-**Note:** This section is for configuring managed storage servers, as previously set up in MAKEREF Add storage servers. You should configure PDUs based on MAKEREF primary and failover server configuration, per volume. This section (Add power distribution units) does not apply to servers that are monitor-only. 
+**Note:** This section is for configuring managed storage servers, as previously set up in <a href="#3.4">Add storage servers</a>. You should configure PDUs based on <a href="#3.5">primary and failover server configuration</a>, per volume. This section (Add power distribution units) does not apply to servers that are monitor-only. 
 
 **Issues Regarding Power Loss to the BMC or PDU**
 
@@ -140,7 +140,7 @@ To add PDUs:
 1. Enter your Management user name.
 1. Enter your Management password. Then click **Save**.
 
-Proceed to MAKEREF Assign PDU outlets to servers. 
+Proceed to <a href="#3.7">Assign PDU outlets to servers. 
 
 <a id="3.7"></a>
 ## Assign PDU outlets to servers
@@ -155,7 +155,7 @@ Before assigning PDU outlets to servers, make note of the primary and failover s
 
 To assign PDU outlets to servers:
 
-1. At the menu bar, click the **Configuration** drop-down menu and click **Power Control**. The PDUs you already added should be displayed. If no PDUs are present, see MAKEREF Add power distribution units. 
+1. At the menu bar, click the **Configuration** drop-down menu and click **Power Control**. The PDUs you already added should be displayed. If no PDUs are present, see <a href="#3.6">Add power distribution units</a>. 
 1. The left column shows all servers used in all file systems that you're currently managing. Each column to the right of the Server column shows outlet assignments for one PDU. If you have four PDUs configured, then there are four PDU columns. Each row represents an outlet-to-server assignment. To assign PDU outlets to servers:
     
     a) Pick a server row for which you want to assign outlets. 
@@ -215,7 +215,7 @@ To create the file system:
     
     To add an additional MDT, click the check-box. Then at the drop-down menu, select the additional MDT target or targets to be used. At the end of this process, after creating the file system, you will enter a command to configure this MDT. 
     
-    **Note:** You can also add additional MDTs after the file system has been created; see MAKEREF Add additional Metadata Targets. Any added MDT you create will be unavailable for use as an OST.
+    **Note:** You can also add additional MDTs after the file system has been created; see <a href="Advanced_Topics_10_0.md/#10.3">Add additional Metadata Targets</a>. Any added MDT you create will be unavailable for use as an OST.
 1. At step 4, choose the object storage targets (OSTs) for the file system by checking the boxes next to the targets to be included in the system. 
 1. Click **Create File System** now to create the file system. 
 1. To follow the process as the file system is created, click on **Status** on the top menu bar and select **Commands**. After the file system creation has completed successfully, perform the remaining steps if applicable.
@@ -235,7 +235,7 @@ this_MDT>/<subdirectory_name>
 
 **Note:** Intel® Manager for Lustre* software will automatically assign OST indices in a distributed fashion across servers to permit striping.
 
-**Note:** If you plan to enable HSM for this file system, see the chapter MAKEREFConfiguring and using Hierarchical Storage Management to setup HSM.
+**Note:** If you plan to enable HSM for this file system, see the chapter <a href="Config_and_using_HSM_6_0.md/#6.0">Configuring and using Hierarchical Storage Management to setup HSM.
 
 <a id="3.10"></a>
 ## View the new file system

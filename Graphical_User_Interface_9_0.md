@@ -51,8 +51,8 @@ This window identifies the:
 - Overall file system capacity and free space
 
 
-This window also identifies the volume(s), primary server(s), and failover server(s) for the MGS, MDT(s) and all OST(s). From this window you can MAKEREFUpdate Advanced Settings and MAKEREF
-<a href="Creating_new_lustre_fs_3_0.md/#3.11">View Client Mount Information</a>.
+This window also identifies the volume(s), primary server(s), and failover server(s) for the MGS, MDT(s) and all OST(s). From this window you can <a href="Advanced_Topics_10_0.md/#10.1">Update Advanced Settings</a> and
+ <a href="Creating_new_lustre_fs_3_0.md/#3.11">View Client Mount Information</a>.
 
 <a id="9.1.2"></a>
 ### Configuring the Dashboard
@@ -76,48 +76,47 @@ Charts are presented as:
 - <a href="#9.2c">MDT charts</a>
 - <a href="#9.2d">OST charts</a>
 
-<a id="9.2a">/a>
+<a id="9.2a"></a>
+
 **File system charts**
 
 The Dashboard window displays the following six charts for one or more file systems:
-MAKEREFS
 
-- Read/Write Heat Map
-- OST Balance
-- Metadata Operations
-- Read/Write Bandwidth
-- Metadata Servers
-- Object Storage Servers
+- <a href="#9.2.1">Read/Write Heat Map</a>
+- <a href="#9.2.2">OST Balance</a>
+- <a href="#9.2.3">Metadata Operations</a>
+- <a href="#9.2.4">Read/Write Bandwidth</a>
+- <a href="#9.2.6">Object Storage Servers</a>
 
-<a id="9.2a">/a>
+<a id="9.2a"></a>
+
 **Server charts**
 
 The Dashboard displays the following three charts for an individual server (MDS or OSS). To access, click **Configure Dashboard**. Then select **Servers** and select the desired server. 
-MAKEREFS
 
-- Read/Write Bandwidth
-- CPU Usage
-- Memory Usage
+- <a href="#9.2.4">Read/Write Bandwidth</a>
+- <a href="#9.2.7">CPU Usage</a>
+- <a href="#9.2.8">Memory Usage</a>
 
-<a id="9.2c">/a>
+<a id="9.2c"></a>
+
 **MDT charts**
 
 The Dashboard window displays the following three charts for the selected MDT. To access, click **Configure Dashboard**. Then select the specific file system. Lastly, select the desired MDT.
-MAKEREFS
 
-- Metadata Operations
-- Space Usage
-- File Usage
+- <a href="#9.2.3">Metadata Operations</a>
+- <a href="#9.2.9">Space Usage</a>
+- <a href="#9.2.810">File Usage</a>
 
-<a id="9.2d">/a>
+<a id="9.2d"></a>
+
 **OST charts**
 
 The OST Dashboard window displays the following three charts for the selected OST. To access, click Configure Dashboard. Then select the specific file system. Lastly, select the desired OST.
-MAKEREFS
 
-- Read/Write Bandwidth
-- Space Usage
-- Object Usage
+- <a href="#9.2.4">Read/Write Bandwidth</a>
+- <a href="#9.2.9">Space Usage</a>
+- <a href="#9.2.11">Object Usage</a>
 
 <a id="9.2.1"></a>
 ### Read/Write Heat Map chart
@@ -134,7 +133,7 @@ Because of the way that activity information is averaged, the heat map may show 
 **Features**
 
 - Mouse over any cell on the heat map to learn which OST this is, its file system, its read or write activity, and the actual starting date and time of that measurement period. 
-- Click on a specific heat map cell to open the Job Stats window (job statistics) for that OST and read/write measurement. See MAKEREF View job statistics. 
+- Click on a specific heat map cell to open the Job Stats window (job statistics) for that OST and read/write measurement. See <a href="Monitoring_lustre_fs_4_0.md/#4.0">View job statistics</a>. 
 - To better view larger numbers of OSTs, for example, more than forty OSTs, click Full Screen to expand the map. 
 
 **View this chart for a specific file system**
@@ -486,13 +485,13 @@ The Configuration menu provides access to the following windows, to let you crea
 The Server Configuration window is shown next. This is an example only configuration only.
 ![md_Graphics/config_servers.png][f9.15]
 
-This window supports the range of server configuration tasks. For instructions on how to add servers, see MAKEREF Add one or more HA servers. 
+This window supports the range of server configuration tasks. For instructions on how to add servers, see <a href="Creating_new_lustre_fs_3_0.md/#3.4">Add one or more HA servers</a>. 
 
 Under Server Configuration, you can:
 
 - Add an object storage server. Click **+ Add Server** or **+ Add More Servers**.
 - View existing servers for all file systems.
-- View **Server State**: This indicator tells you the alert status for that server. A green check mark indicates that all is well with that server. A red exclamation mark indicates an active alert has been generated for this server; you can mouse over the exclamation mark to learn the cause of the alert. See MAKEREF View all status messages for more information. 
+- View **Server State**: This indicator tells you the alert status for that server. A green check mark indicates that all is well with that server. A red exclamation mark indicates an active alert has been generated for this server; you can mouse over the exclamation mark to learn the cause of the alert. See <a href="#9.3.4">View all status messages</a> for more information. 
 - View the **Profile** associated with each server. When you add a new server, you select the server profile for that server. The profile defines the role of that server. There are generally four server profiles available, however your installation may list more. The four common server profiles are:
     - *Managed storage server*
     - *Monitored storage server*
@@ -500,7 +499,7 @@ Under Server Configuration, you can:
     - *Robinhood Policy Engine server*
 - Determine **LNet state** for a given server. Possible LNet states are: *LNet up*, *LNet down*, and *LNet unloaded*. 
 - Click on the server name (hostname) to open a <a href="#9.3.1.1">Server Detail window</a> to learn more about that server and access configuration options.
-- Under **Actions**, specific to each server, you can perform the following commands. These commands are used primarily to decommission servers. See MAKEREF Decommissioning a server for an MGT, MDT, or OST.
+- Under **Actions**, specific to each server, you can perform the following commands. These commands are used primarily to decommission servers. See <a href="Manage_maintain_HA_lustre_fs_5_0.md/#5.13">Decommissioning a server for an MGT, MDT, or OST</a>.
     - **Reboot**: Initiate a reboot on this server. If this server is configured as the primary server of an HA pair, the file system will failover to the secondary server until this server is back online. The file system will then fail back to the primary server. If this is not configured as an HA server, then any file systems targets that rely on this server will be unavailable until rebooting is complete.
     - **Shutdown**: Initiate an orderly shutdown on this server. If this server is configured as the primary server of an HA pair, the file system will failover to the secondary server. If this is not configured as an HA server, then any file systems targets that rely on this server will be unavailable until this server is rebooted.
     - **Remove**: Remove this server. If this server is configured as the primary server of an HA pair, then the file system will failover to the secondary server.
@@ -514,7 +513,7 @@ Under Server Configuration, you can:
 Under **Server Actions**, you can perform the commands listed next. Note that these commands are *bulk action commands*. This means that when you click one of the following commands, you can then select which server(s) to perform this command on. You can enter a host name or host name expression in the file to generate a list of existing servers. You can choose **Select All**, **Select None**, or **Invert Selection**. At the far right, under *Select Server*, you can also select or deselect a server. After selecting the desired server(s), you can proceed to perform the command and it will be run on all selected servers. 
 
 - **Detect File Systems**: Detect an existing file system to be monitored at the manager GUI.
-- **Re-write Target Configuration**: Update each target with the current NID for the server with which it is associated. This is necessary after making changes to server/target configurations and is done after rescanning NIDs. Also see Handling network address changes (updating NIDs).
+- **Re-write Target Configuration**: Update each target with the current NID for the server with which it is associated. This is necessary after making changes to server/target configurations and is done after rescanning NIDs. Also see <a href="Manage_maintain_HA_lustre_fs_5_0.md/#5.9">Handling network address changes</a> (updating NIDs).
 - **Install Updates**: When an updated release of Intel® Manager for Lustre* software is installed at the *manager* server, a notification is displayed at the manager GUI that updated software is also available for installation on a managed server or servers. This button become enabled. After clicking the **Install Updates** button, a list of servers (default: all) to be included in this update operation is displayed in the Update dialog. Clicking the **Run** button in this dialog will cause the updated packages to be installed on the managed servers.
 
 
@@ -612,7 +611,7 @@ The Power Control window accessed from the Configuration menu is shown next.
 
 The Power Control window lets you configure and manager power distribution units. At this window you can add a detected PDU and then assign specific PDU outlets to specific servers. Once configured, this feature lets you check the status of PDUs and individual outlets. Based on server power requirements and your failover configuration, you may want to assign more than one outlet to a server. For improved failover performance, assign the failover outlet from a different PDU than the primary outlet. When you associate PDU failover outlets with servers using this tool, STONITH is automatically configured. Note that primary and secondary servers for each target must first be configured on the Volumes window.
 
-See MAKEREF Add power distribution units.
+See <a href="Creating_new_lustre_fs_3_0.md/#3.6">Add power distribution units</a>.
 
 <a id="9.3.3"></a>
 ### File Systems window
@@ -622,7 +621,7 @@ The *File Systems* window accessed from the *Configuration* menu is shown next.
 
 The *File Systems* window lets you configure, view and manage multiple file systems. 
 
-Click **Create File Syste**m (or **Create More File Systems**) to begin the process of creating a new file system. See MAKEREF Create a new Lustre* file system.
+Click **Create File Syste**m (or **Create More File Systems**) to begin the process of creating a new file system. See <a href="Creating_new_lustre_fs_3_0.md/#3.0">Create a new Lustre* file system</a>.
 
 Under Current File Systems, for each file system you can:
 
@@ -639,12 +638,12 @@ Under Actions, you can:
 - **Remove** the file system: This file system is removed and will not be available to clients. However this file system's contents will remain intact until its volumes are reused in another file system.
 - **Stop** the file system: This stops the metadata and object storage targets, thus making the file system unavailable to clients. If the file system has been stopped, to restart the file system, click **Start**.
 
-To view the full display of file system parameters, click on the file system name in the left column. See MAKEREF View All File System Parameters.
+To view the full display of file system parameters, click on the file system name in the left column. See <a href="Monitoring_lustre_fs_4_0.md/#4.4">View All File System Parameters</a>.
 
 <a id="9.3.4"></a>
 ### HSM window
 
-After Hierarchical Storage Management (HSM) has been configured for a file system, this HSM Copytool chart displays a moving time-line of waiting copytool requests, current copytool operations, and the number of idle copytool workers. For information about setting up HSM for a file system, see MAKEREF Configuring and using Hierarchical Storage Management. 
+After Hierarchical Storage Management (HSM) has been configured for a file system, this HSM Copytool chart displays a moving time-line of waiting copytool requests, current copytool operations, and the number of idle copytool workers. For information about setting up HSM for a file system, see <a href="Config_and_using_HSM_6_0.md/#6.0">Configuring and using Hierarchical Storage Management</a>. 
 
 ![md_Graphics/HSM_Operations.png][f9.19]
 
@@ -664,7 +663,7 @@ If a copytool has been added but never configured or started, then click **Actio
 - **Configure** - Configure this copytool on the worker. Do not start the copytool. Status will show as Configured.
 - **Force Remove** - Remove this copytool from the manager database without deconfiguring this copytool on the worker node. It will no longer appear on this HSM window. This is NOT the best way to remove a copytool, because a later attempt to add this copytool back will fail unless it is manually reconfigured. Only consider using Force Remove if Remove has failed. 
 
-To learn about HSM capabilities supported in Intel® Enterprise Edition for Lustre* software, see MAKEREF Configuring and using Hierarchical Storage Management.
+To learn about HSM capabilities supported in Intel® Enterprise Edition for Lustre* software, see <a href="Config_and_using_HSM_6_0.md/#6.0">Configuring and using Hierarchical Storage Management</a>.
 
 <a id="9.3.5"></a>
 ### Storage window
@@ -682,15 +681,15 @@ The *Users* window lets you create and manage the following accounts types:
 - **File system user** - A file system user has access to the full GUI, except for the Configuration drop-down menu, which is not displayed. A file system user cannot create or manage a file system, but can monitor all file systems using the Dashboard, and the Alerts and Logs windows. Users log in by clicking **Login** in the upper-right corner of the screen, and log out by clicking **Logout**. 
 - **Superuser** - A superuser has full access to the application, including the Configuration drop-down menu and all sub-menus. A superuser can create, monitor, manage, and remove file system and their components. A superuser create, modify (change passwords), and delete users. A superuser cannot delete their own account, but a superuser can create or delete another superuser.
 
-See MAKEREF Creating User Accounts for more information. 
+See <a href="Getting_started_2_0.md/#2.1">Creating User Accounts</a> for more information. 
 
 After logging in, a user can modify their own account by clicking Account near the upper-right corner of the screen. A user can set these options:
 
 - **Details** - Username, email address, and first and last name can be changed.
 - **Password** - Password can be changed and confirmed.
-- **Email Notifications** - The types of events for which this account will receive emailed notifications can be selected from a checklist. If no notifications are selected, email notifications will be sent for all alerts except “Host contact alerts”. See MAKEREFSetting up Email Notifications.
+- **Email Notifications** - The types of events for which this account will receive emailed notifications can be selected from a checklist. If no notifications are selected, email notifications will be sent for all alerts except “Host contact alerts”. See <a href="Getting_started_2_0.md/#2.2">Setting up Email Notifications</a>.
 
-See MAKEREFCreating User Accounts for more information.
+See <a href="Getting_started_2_0.md/#2.1">Creating User Accounts</a> for more information.
 
 <a id="9.3.7"></a>
 ### Volumes window
@@ -735,10 +734,10 @@ The Job Stats window is accessible at the top menu bar. Click **Job Stats**.
 
 Clicking **Job Stats** opens the Job Stats window and reveals the top five jobs currently in process. The listed jobs can be sorted by column and average duration can be selected. Column sorts and duration selections are persistent if you leave and later return to this window.
 
-**Note:** Job stats need to be enabled before then can be viewed. See View Job stats.
+**Note:** Job stats need to be enabled before then can be viewed. See <a href="Monitoring_lustre_fs_4_0.md/#4.3">View Job stats</a>.
 ![md_Graphics/job_stats.png][f9.4]
 
-On the MAKEREFRead/Write Heat Map (on the Dashboard), you can also click a heat map cell and go to the Job Stats screen for that OST. Doing so will present a static view of job stats for the selected OST. Because it is static, *Duration* is not selectable.
+On the <a href="#9.2.1">Read/Write Heat Map</a> (on the Dashboard), you can also click a heat map cell and go to the Job Stats screen for that OST. Doing so will present a static view of job stats for the selected OST. Because it is static, *Duration* is not selectable.
 
 <a id="9.5"></a>
 ## Logs window
